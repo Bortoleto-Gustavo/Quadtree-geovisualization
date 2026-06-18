@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Geoestatístico</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Mapa Geoestatístico</h1>
+        <p>Visualização de dados geográficos e estatísticos</p>
+    </header>
+
+    <main class="container">
+
+        <aside class="sidebar">
+
+            <h2>Configurações</h2>
+
+            <label for="csv">
+                Escolha um arquivo CSV
+            </label>
+            <input type="file" id="csv">
+
+            <label for="visualizacao">
+                Escolha o tipo de visualização
+            </label>
+            <select id="visualizacao">
+                <option>Pontos</option>
+                <option>Coroplético</option>
+                <option>Símbolos Proporcionais</option>
+            </select>
+
+            <button>
+                Atualizar Mapa
+            </button>
+
+        </aside>
+
+        <section class="map-container">
+            <div id="map">
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
