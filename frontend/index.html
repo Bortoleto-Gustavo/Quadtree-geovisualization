@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapa Geoestatístico</title>
+    <title>Mapa Geoestatístico - Visualização de Pontos</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
         crossorigin=""/>
@@ -15,34 +15,37 @@
 <body>
 
     <header>
-        <h1>Mapa Geoestatístico</h1>
-        <p>Visualização de dados geográficos e estatísticos</p>
+        <div class="header-content">
+            <div>
+                <h1>Mapa Geoestatístico</h1>
+                <p>Visualização de pontos com QuadTree</p>
+            </div>
+            <div id="contagem-pontos" class="contagem">
+                Nenhum ponto carregado
+            </div>
+        </div>
     </header>
 
     <main class="container">
 
         <aside class="sidebar">
-
             <h2>Configurações</h2>
 
-            <label for="csv">
-                Escolha um arquivo CSV
-            </label>
-            <input type="file" id="csv">
+            <div class="upload-area">
+                <label for="csv">
+                    Selecione um arquivo CSV
+                </label>
+                <input type="file" id="csv" accept=".csv">
+            </div>
 
-            <label for="visualizacao">
-                Escolha o tipo de visualização
-            </label>
-            <select id="visualizacao">
-                <option>Pontos</option>
-                <option>Coroplético</option>
-                <option>Símbolos Proporcionais</option>
-            </select>
+            <div id="status" class="info-box">
+                <p>Aguardando arquivo...</p>
+            </div>
 
-            <button>
-                Atualizar Mapa
-            </button>
-
+            <div id="estatisticas" class="info-box">
+                <p>Estatísticas</p>
+                <p style="color: #999; font-size: 13px;">Carregue um arquivo para ver os dados</p>
+            </div>
         </aside>
 
         <section class="map-container">
