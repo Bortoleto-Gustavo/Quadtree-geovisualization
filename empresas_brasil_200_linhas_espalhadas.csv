@@ -1,0 +1,201 @@
+empresa,nome,Municipio,estado,dados,latitude,longitude
+EmpresaTech001,Empresa 1,São Paulo,SP,540,-23.575771,-46.585722
+EmpresaTech002,Empresa 2,Rio de Janeiro,RJ,1410,-22.950724,-43.111579
+EmpresaTech003,Empresa 3,Belo Horizonte,MG,3542,-19.971365,-43.869981
+EmpresaTech004,Empresa 4,Curitiba,PR,544,-25.503372,-49.248402
+EmpresaTech005,Empresa 5,Porto Alegre,RS,2666,-29.974425,-51.160544
+EmpresaTech006,Empresa 6,Salvador,BA,2294,-12.984276,-38.499824
+EmpresaTech007,Empresa 7,Fortaleza,CE,2442,-3.664881,-38.461633
+EmpresaTech008,Empresa 8,Recife,PE,1209,-7.981852,-34.872611
+EmpresaTech009,Empresa 9,Manaus,AM,1817,-3.05041,-59.973195
+EmpresaTech010,Empresa 10,Belém,PA,2295,-1.449109,-48.447524
+EmpresaTech011,Empresa 11,Goiânia,GO,1918,-16.626924,-49.286641
+EmpresaTech012,Empresa 12,Campinas,SP,4906,-22.972519,-47.020214
+EmpresaTech013,Empresa 13,Santos,SP,3148,-23.981327,-46.269043
+EmpresaTech014,Empresa 14,Florianópolis,SC,1091,-27.611027,-48.581036
+EmpresaTech015,Empresa 15,Vitória,ES,1374,-20.392611,-40.377357
+EmpresaTech016,Empresa 16,Natal,RN,3479,-5.733292,-35.145964
+EmpresaTech017,Empresa 17,João Pessoa,PB,4402,-7.061755,-34.838987
+EmpresaTech018,Empresa 18,Maceió,AL,4299,-9.695402,-35.758352
+EmpresaTech019,Empresa 19,Aracaju,SE,4135,-10.927015,-37.089985
+EmpresaTech020,Empresa 20,Cuiabá,MT,3027,-15.54785,-56.121379
+EmpresaTech021,Empresa 21,São Paulo,SP,3170,-23.572657,-46.620463
+EmpresaTech022,Empresa 22,Rio de Janeiro,RJ,2623,-22.939091,-43.105372
+EmpresaTech023,Empresa 23,Belo Horizonte,MG,2003,-19.840695,-43.91386
+EmpresaTech024,Empresa 24,Curitiba,PR,3855,-25.372246,-49.271038
+EmpresaTech025,Empresa 25,Porto Alegre,RS,2590,-30.06827,-51.156687
+EmpresaTech026,Empresa 26,Salvador,BA,940,-12.999027,-38.563766
+EmpresaTech027,Empresa 27,Fortaleza,CE,1567,-3.662213,-38.559946
+EmpresaTech028,Empresa 28,Recife,PE,1608,-8.058601,-34.935832
+EmpresaTech029,Empresa 29,Manaus,AM,4288,-3.15778,-60.052573
+EmpresaTech030,Empresa 30,Belém,PA,1415,-1.506934,-48.526126
+EmpresaTech031,Empresa 31,Goiânia,GO,4473,-16.72123,-49.186893
+EmpresaTech032,Empresa 32,Campinas,SP,3544,-22.957115,-47.08855
+EmpresaTech033,Empresa 33,Santos,SP,2481,-23.993746,-46.408546
+EmpresaTech034,Empresa 34,Florianópolis,SC,713,-27.546169,-48.626403
+EmpresaTech035,Empresa 35,Vitória,ES,3325,-20.378959,-40.269346
+EmpresaTech036,Empresa 36,Natal,RN,4865,-5.870025,-35.232578
+EmpresaTech037,Empresa 37,João Pessoa,PB,3048,-7.159685,-34.781671
+EmpresaTech038,Empresa 38,Maceió,AL,4644,-9.677856,-35.664012
+EmpresaTech039,Empresa 39,Aracaju,SE,3604,-10.887045,-37.07263
+EmpresaTech040,Empresa 40,Cuiabá,MT,3176,-15.662156,-56.134433
+EmpresaTech041,Empresa 41,São Paulo,SP,2853,-23.508943,-46.584449
+EmpresaTech042,Empresa 42,Rio de Janeiro,RJ,4792,-22.983007,-43.147456
+EmpresaTech043,Empresa 43,Belo Horizonte,MG,2104,-19.83825,-43.980769
+EmpresaTech044,Empresa 44,Curitiba,PR,987,-25.36613,-49.253317
+EmpresaTech045,Empresa 45,Porto Alegre,RS,686,-29.987728,-51.145414
+EmpresaTech046,Empresa 46,Salvador,BA,1949,-12.928325,-38.548757
+EmpresaTech047,Empresa 47,Fortaleza,CE,4711,-3.681963,-38.597052
+EmpresaTech048,Empresa 48,Recife,PE,912,-7.981879,-34.882378
+EmpresaTech049,Empresa 49,Manaus,AM,2798,-3.074473,-60.085229
+EmpresaTech050,Empresa 50,Belém,PA,4373,-1.441467,-48.497125
+EmpresaTech051,Empresa 51,Goiânia,GO,2890,-16.740426,-49.187997
+EmpresaTech052,Empresa 52,Campinas,SP,2207,-22.933642,-47.137997
+EmpresaTech053,Empresa 53,Santos,SP,1720,-23.912157,-46.329344
+EmpresaTech054,Empresa 54,Florianópolis,SC,3358,-27.644339,-48.590415
+EmpresaTech055,Empresa 55,Vitória,ES,3067,-20.261093,-40.347665
+EmpresaTech056,Empresa 56,Natal,RN,4816,-5.723867,-35.180278
+EmpresaTech057,Empresa 57,João Pessoa,PB,1387,-7.193992,-34.916056
+EmpresaTech058,Empresa 58,Maceió,AL,984,-9.6969,-35.689347
+EmpresaTech059,Empresa 59,Aracaju,SE,1817,-10.968939,-37.03861
+EmpresaTech060,Empresa 60,Cuiabá,MT,893,-15.612496,-56.10193
+EmpresaTech061,Empresa 61,São Paulo,SP,4542,-23.617023,-46.58658
+EmpresaTech062,Empresa 62,Rio de Janeiro,RJ,1947,-22.963614,-43.214183
+EmpresaTech063,Empresa 63,Belo Horizonte,MG,779,-19.874356,-43.975115
+EmpresaTech064,Empresa 64,Curitiba,PR,4235,-25.368791,-49.269321
+EmpresaTech065,Empresa 65,Porto Alegre,RS,692,-30.020476,-51.182963
+EmpresaTech066,Empresa 66,Salvador,BA,3766,-12.939086,-38.531386
+EmpresaTech067,Empresa 67,Fortaleza,CE,2033,-3.700788,-38.573873
+EmpresaTech068,Empresa 68,Recife,PE,4304,-8.095455,-34.924619
+EmpresaTech069,Empresa 69,Manaus,AM,4557,-3.080517,-60.022679
+EmpresaTech070,Empresa 70,Belém,PA,2756,-1.502925,-48.532279
+EmpresaTech071,Empresa 71,Goiânia,GO,4791,-16.667724,-49.317762
+EmpresaTech072,Empresa 72,Campinas,SP,1928,-22.968385,-46.996454
+EmpresaTech073,Empresa 73,Santos,SP,615,-23.927538,-46.413399
+EmpresaTech074,Empresa 74,Florianópolis,SC,3408,-27.521719,-48.62116
+EmpresaTech075,Empresa 75,Vitória,ES,2874,-20.256453,-40.343713
+EmpresaTech076,Empresa 76,Natal,RN,3907,-5.727308,-35.18028
+EmpresaTech077,Empresa 77,João Pessoa,PB,1135,-7.080128,-34.917905
+EmpresaTech078,Empresa 78,Maceió,AL,3840,-9.606861,-35.750631
+EmpresaTech079,Empresa 79,Aracaju,SE,2655,-10.88742,-37.14064
+EmpresaTech080,Empresa 80,Cuiabá,MT,502,-15.53747,-56.088344
+EmpresaTech081,Empresa 81,São Paulo,SP,2951,-23.474929,-46.705383
+EmpresaTech082,Empresa 82,Rio de Janeiro,RJ,2071,-22.971689,-43.248144
+EmpresaTech083,Empresa 83,Belo Horizonte,MG,2799,-19.840882,-44.007786
+EmpresaTech084,Empresa 84,Curitiba,PR,4983,-25.460662,-49.204826
+EmpresaTech085,Empresa 85,Porto Alegre,RS,4469,-30.026376,-51.283626
+EmpresaTech086,Empresa 86,Salvador,BA,3175,-12.910942,-38.453127
+EmpresaTech087,Empresa 87,Fortaleza,CE,2663,-3.693752,-38.548506
+EmpresaTech088,Empresa 88,Recife,PE,1153,-8.036692,-34.816987
+EmpresaTech089,Empresa 89,Manaus,AM,1402,-3.059358,-59.957838
+EmpresaTech090,Empresa 90,Belém,PA,1925,-1.502474,-48.452363
+EmpresaTech091,Empresa 91,Goiânia,GO,3335,-16.607483,-49.194564
+EmpresaTech092,Empresa 92,Campinas,SP,2397,-22.944671,-47.066915
+EmpresaTech093,Empresa 93,Santos,SP,552,-24.028432,-46.304133
+EmpresaTech094,Empresa 94,Florianópolis,SC,2146,-27.620405,-48.584506
+EmpresaTech095,Empresa 95,Vitória,ES,2122,-20.334514,-40.373142
+EmpresaTech096,Empresa 96,Natal,RN,511,-5.739013,-35.268645
+EmpresaTech097,Empresa 97,João Pessoa,PB,2903,-7.144781,-34.881273
+EmpresaTech098,Empresa 98,Maceió,AL,1203,-9.702622,-35.703793
+EmpresaTech099,Empresa 99,Aracaju,SE,722,-11.025927,-37.095149
+EmpresaTech100,Empresa 100,Cuiabá,MT,2358,-15.673298,-56.032843
+EmpresaTech101,Empresa 101,São Paulo,SP,3070,-23.481247,-46.625005
+EmpresaTech102,Empresa 102,Rio de Janeiro,RJ,4840,-22.968665,-43.205282
+EmpresaTech103,Empresa 103,Belo Horizonte,MG,4254,-19.902452,-43.934011
+EmpresaTech104,Empresa 104,Curitiba,PR,628,-25.448626,-49.194588
+EmpresaTech105,Empresa 105,Porto Alegre,RS,3739,-30.069655,-51.182821
+EmpresaTech106,Empresa 106,Salvador,BA,1846,-12.980147,-38.433987
+EmpresaTech107,Empresa 107,Fortaleza,CE,718,-3.736232,-38.594137
+EmpresaTech108,Empresa 108,Recife,PE,1290,-8.065234,-34.798735
+EmpresaTech109,Empresa 109,Manaus,AM,877,-3.087226,-60.013899
+EmpresaTech110,Empresa 110,Belém,PA,2419,-1.492999,-48.423262
+EmpresaTech111,Empresa 111,Goiânia,GO,3592,-16.643444,-49.283447
+EmpresaTech112,Empresa 112,Campinas,SP,3663,-22.931869,-47.118613
+EmpresaTech113,Empresa 113,Santos,SP,782,-23.88381,-46.382676
+EmpresaTech114,Empresa 114,Florianópolis,SC,3269,-27.590142,-48.563238
+EmpresaTech115,Empresa 115,Vitória,ES,3836,-20.392856,-40.354155
+EmpresaTech116,Empresa 116,Natal,RN,897,-5.735718,-35.175299
+EmpresaTech117,Empresa 117,João Pessoa,PB,1877,-7.105387,-34.855979
+EmpresaTech118,Empresa 118,Maceió,AL,4778,-9.708374,-35.773738
+EmpresaTech119,Empresa 119,Aracaju,SE,2791,-10.946419,-37.054805
+EmpresaTech120,Empresa 120,Cuiabá,MT,4240,-15.609402,-56.148992
+EmpresaTech121,Empresa 121,São Paulo,SP,4296,-23.498347,-46.632301
+EmpresaTech122,Empresa 122,Rio de Janeiro,RJ,4257,-22.980022,-43.196117
+EmpresaTech123,Empresa 123,Belo Horizonte,MG,2603,-19.89298,-44.005462
+EmpresaTech124,Empresa 124,Curitiba,PR,3283,-25.507262,-49.313094
+EmpresaTech125,Empresa 125,Porto Alegre,RS,2604,-29.97725,-51.141884
+EmpresaTech126,Empresa 126,Salvador,BA,607,-13.02205,-38.528189
+EmpresaTech127,Empresa 127,Fortaleza,CE,4564,-3.712078,-38.475007
+EmpresaTech128,Empresa 128,Recife,PE,1106,-8.094218,-34.802724
+EmpresaTech129,Empresa 129,Manaus,AM,3360,-3.100314,-59.967135
+EmpresaTech130,Empresa 130,Belém,PA,2312,-1.425434,-48.526456
+EmpresaTech131,Empresa 131,Goiânia,GO,2605,-16.626257,-49.214172
+EmpresaTech132,Empresa 132,Campinas,SP,2207,-22.906494,-46.991319
+EmpresaTech133,Empresa 133,Santos,SP,3105,-24.030466,-46.341736
+EmpresaTech134,Empresa 134,Florianópolis,SC,1625,-27.632997,-48.496602
+EmpresaTech135,Empresa 135,Vitória,ES,2631,-20.394822,-40.372507
+EmpresaTech136,Empresa 136,Natal,RN,2954,-5.779536,-35.225987
+EmpresaTech137,Empresa 137,João Pessoa,PB,765,-7.126187,-34.932674
+EmpresaTech138,Empresa 138,Maceió,AL,1966,-9.673904,-35.715189
+EmpresaTech139,Empresa 139,Aracaju,SE,3561,-10.916307,-37.08485
+EmpresaTech140,Empresa 140,Cuiabá,MT,4412,-15.593585,-56.086542
+EmpresaTech141,Empresa 141,São Paulo,SP,2322,-23.498414,-46.604804
+EmpresaTech142,Empresa 142,Rio de Janeiro,RJ,2902,-22.844497,-43.098361
+EmpresaTech143,Empresa 143,Belo Horizonte,MG,1577,-19.856688,-43.899779
+EmpresaTech144,Empresa 144,Curitiba,PR,3694,-25.49681,-49.283217
+EmpresaTech145,Empresa 145,Porto Alegre,RS,3638,-30.047593,-51.277818
+EmpresaTech146,Empresa 146,Salvador,BA,1380,-12.931217,-38.521965
+EmpresaTech147,Empresa 147,Fortaleza,CE,587,-3.703796,-38.458668
+EmpresaTech148,Empresa 148,Recife,PE,3655,-8.103504,-34.799261
+EmpresaTech149,Empresa 149,Manaus,AM,1607,-3.085787,-59.956066
+EmpresaTech150,Empresa 150,Belém,PA,3377,-1.440614,-48.444363
+EmpresaTech151,Empresa 151,Goiânia,GO,2887,-16.663361,-49.327392
+EmpresaTech152,Empresa 152,Campinas,SP,2552,-22.87544,-47.114368
+EmpresaTech153,Empresa 153,Santos,SP,1584,-24.014698,-46.289128
+EmpresaTech154,Empresa 154,Florianópolis,SC,4359,-27.553582,-48.485174
+EmpresaTech155,Empresa 155,Vitória,ES,1642,-20.394197,-40.251357
+EmpresaTech156,Empresa 156,Natal,RN,4970,-5.846841,-35.262746
+EmpresaTech157,Empresa 157,João Pessoa,PB,1070,-7.063997,-34.805414
+EmpresaTech158,Empresa 158,Maceió,AL,2662,-9.70312,-35.664005
+EmpresaTech159,Empresa 159,Aracaju,SE,3419,-11.023728,-37.059387
+EmpresaTech160,Empresa 160,Cuiabá,MT,3979,-15.604598,-56.135125
+EmpresaTech161,Empresa 161,São Paulo,SP,1292,-23.553089,-46.660196
+EmpresaTech162,Empresa 162,Rio de Janeiro,RJ,1039,-22.92221,-43.179192
+EmpresaTech163,Empresa 163,Belo Horizonte,MG,1808,-19.875712,-43.922397
+EmpresaTech164,Empresa 164,Curitiba,PR,3907,-25.351925,-49.248395
+EmpresaTech165,Empresa 165,Porto Alegre,RS,1805,-29.974263,-51.176706
+EmpresaTech166,Empresa 166,Salvador,BA,2835,-12.935939,-38.42264
+EmpresaTech167,Empresa 167,Fortaleza,CE,3493,-3.789984,-38.581524
+EmpresaTech168,Empresa 168,Recife,PE,1294,-8.113725,-34.848145
+EmpresaTech169,Empresa 169,Manaus,AM,1761,-3.091398,-60.043842
+EmpresaTech170,Empresa 170,Belém,PA,4079,-1.520612,-48.521602
+EmpresaTech171,Empresa 171,Goiânia,GO,508,-16.645437,-49.337753
+EmpresaTech172,Empresa 172,Campinas,SP,2159,-22.91254,-47.092268
+EmpresaTech173,Empresa 173,Santos,SP,568,-23.922338,-46.359436
+EmpresaTech174,Empresa 174,Florianópolis,SC,2372,-27.55131,-48.500375
+EmpresaTech175,Empresa 175,Vitória,ES,1150,-20.341704,-40.354004
+EmpresaTech176,Empresa 176,Natal,RN,1468,-5.730684,-35.259239
+EmpresaTech177,Empresa 177,João Pessoa,PB,1975,-7.037303,-34.897084
+EmpresaTech178,Empresa 178,Maceió,AL,1073,-9.574352,-35.788534
+EmpresaTech179,Empresa 179,Aracaju,SE,3931,-10.881404,-37.147216
+EmpresaTech180,Empresa 180,Cuiabá,MT,1918,-15.569269,-56.04501
+EmpresaTech181,Empresa 181,São Paulo,SP,2822,-23.598831,-46.562584
+EmpresaTech182,Empresa 182,Rio de Janeiro,RJ,3173,-22.896359,-43.213827
+EmpresaTech183,Empresa 183,Belo Horizonte,MG,4472,-19.954366,-43.988419
+EmpresaTech184,Empresa 184,Curitiba,PR,4480,-25.384725,-49.294746
+EmpresaTech185,Empresa 185,Porto Alegre,RS,3051,-29.969645,-51.272074
+EmpresaTech186,Empresa 186,Salvador,BA,1550,-13.026739,-38.486776
+EmpresaTech187,Empresa 187,Fortaleza,CE,1859,-3.686083,-38.53063
+EmpresaTech188,Empresa 188,Recife,PE,2623,-8.11476,-34.824428
+EmpresaTech189,Empresa 189,Manaus,AM,664,-3.150606,-60.052614
+EmpresaTech190,Empresa 190,Belém,PA,2035,-1.489363,-48.43214
+EmpresaTech191,Empresa 191,Goiânia,GO,1454,-16.663212,-49.229479
+EmpresaTech192,Empresa 192,Campinas,SP,2633,-22.873697,-47.134639
+EmpresaTech193,Empresa 193,Santos,SP,1190,-24.029299,-46.269802
+EmpresaTech194,Empresa 194,Florianópolis,SC,3569,-27.670738,-48.486916
+EmpresaTech195,Empresa 195,Vitória,ES,4425,-20.272169,-40.249207
+EmpresaTech196,Empresa 196,Natal,RN,3738,-5.863461,-35.192395
+EmpresaTech197,Empresa 197,João Pessoa,PB,1074,-7.089565,-34.848282
+EmpresaTech198,Empresa 198,Maceió,AL,2089,-9.590281,-35.719911
+EmpresaTech199,Empresa 199,Aracaju,SE,842,-10.88709,-37.083804
+EmpresaTech200,Empresa 200,Cuiabá,MT,4379,-15.536332,-56.126828
