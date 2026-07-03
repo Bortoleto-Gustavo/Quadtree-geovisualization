@@ -60,10 +60,15 @@ http://localhost:5000
 - Escolha seu arquivo .csv
 - Aguarde o processamento
 ### 4. Visualização dos dados
-- Os pontos aparecerão automaticamente no mapa
-- Cada ponto tem uma cor diferente
-- Clique em um ponto para ver todas as informações
+- Selecione uma das três visualizações possíveis
+   - Pontos
+      - Os pontos aparecerão automaticamente no mapa de acordo com as coordenadas de latitude e longitude 
+   - Símbolos proporcionais
+      - Dado o nome do município, um círculo será desenhado em seu centro cujo raio é proporcional à quantidade de registros associados à mesma cidade 
+   - Coroplético
+      - Dado o nome do município, seu território vai ser pintado com um gradiente de cores proporcionais à quantidade de registros associados à mesma cidade
+- Clique em um ponto ou no círculo para ver todas as informações do arquivo .csv enviado
 ### 5. Navegar no mapa
 - Zoom: Use a roda do mouse ou os botões + e -
 - Mover: Clique e arraste o mapa
-- A QuadTree atualiza os pontos conforme você navega
+- A QuadTree atualiza os pontos / símbolos conforme você navega
