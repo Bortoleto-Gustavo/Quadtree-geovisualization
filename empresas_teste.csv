@@ -1,0 +1,116 @@
+empresa,municipio,estado,valor,latitude,longitude
+Tech Innovate SP 1,São Paulo,SP,150000,-23.5412,-46.6210
+Comércio Silva SP 2,São Paulo,SP,85000,-23.5550,-46.6402
+Logística Alpha SP 3,são paulo,SP,210000,-23.5305,-46.6551
+Padaria Central SP 4,São Paulo,SP,45000,-23.5621,-46.6110
+Consultoria Beta SP 5,SÃO PAULO,SP,320000,-23.5780,-46.6805
+Farmácia Bem Estar SP 6,São Paulo,SP,95000,-23.5120,-46.5900
+Mercado da Esquina SP 7,São Paulo,SP,120000,-23.5905,-46.6022
+Indústria Gama SP 8,são paulo,SP,550000,-23.5201,-46.7010
+Boutique Fashion SP 9,São Paulo,SP,60000,-23.5666,-46.6666
+Café Arábica SP 10,SÃO PAULO,SP,40000,-23.5488,-46.6388
+Academia Força SP 11,São Paulo,SP,110000,-23.5111,-46.6111
+Papelaria Nova SP 12,São Paulo,SP,35000,-23.5899,-46.6899
+Clínica Saúde SP 13,São Paulo,SP,400000,-23.5355,-46.6455
+Restaurante Sabor SP 14,são paulo,SP,180000,-23.5700,-46.6200
+Oficina Motor SP 15,São Paulo,SP,75000,-23.5255,-46.6755
+Estúdio Foto SP 16,SÃO PAULO,SP,50000,-23.5611,-46.6011
+Imobiliária Teto SP 17,São Paulo,SP,250000,-23.5812,-46.6512
+Agência Viagem SP 18,São Paulo,SP,140000,-23.5422,-46.6922
+Pet Shop Animal SP 19,são paulo,SP,80000,-23.5188,-46.6288
+Barbearia Corte SP 20,São Paulo,SP,30000,-23.5955,-46.6700
+Tech Innovate RJ 1,Rio de Janeiro,RJ,160000,-22.9011,-43.1611
+Comércio Silva RJ 2,rio de janeiro,RJ,90000,-22.9150,-43.1802
+Logística Alpha RJ 3,Rio de Janeiro,RJ,220000,-22.8805,-43.1951
+Padaria Central RJ 4,RIO DE JANEIRO,RJ,48000,-22.9221,-43.1510
+Consultoria Beta RJ 5,Rio de Janeiro,RJ,330000,-22.9480,-43.2205
+Farmácia Bem Estar RJ 6,Rio de Janeiro,RJ,98000,-22.8620,-43.1300
+Mercado da Esquina RJ 7,rio de janeiro,RJ,125000,-22.9605,-43.1422
+Indústria Gama RJ 8,Rio de Janeiro,RJ,560000,-22.8701,-43.2410
+Boutique Fashion RJ 9,RIO DE JANEIRO,RJ,62000,-22.9266,-43.2066
+Café Arábica RJ 10,Rio de Janeiro,RJ,42000,-22.9088,-43.1788
+Academia Força RJ 11,Rio de Janeiro,RJ,115000,-22.8611,-43.1511
+Papelaria Nova RJ 12,rio de janeiro,RJ,36000,-22.9599,-43.2299
+Clínica Saúde RJ 13,Rio de Janeiro,RJ,410000,-22.8855,-43.1855
+Restaurante Sabor RJ 14,RIO DE JANEIRO,RJ,185000,-22.9300,-43.1600
+Oficina Motor RJ 15,Rio de Janeiro,RJ,78000,-22.8755,-43.2155
+Tech Innovate BH 1,Belo Horizonte,MG,145000,-19.9011,-43.9211
+Comércio Silva BH 2,belo horizonte,MG,82000,-19.9250,-43.9502
+Logística Alpha BH 3,Belo Horizonte,MG,200000,-19.8805,-43.9651
+Padaria Central BH 4,BELO HORIZONTE,MG,42000,-19.9321,-43.9110
+Consultoria Beta BH 5,Belo Horizonte,MG,310000,-19.9480,-43.9805
+Farmácia Bem Estar BH 6,Belo Horizonte,MG,92000,-19.8620,-43.8900
+Mercado da Esquina BH 7,belo horizonte,MG,115000,-19.9605,-43.9022
+Indústria Gama BH 8,Belo Horizonte,MG,540000,-19.8701,-44.0010
+Boutique Fashion BH 9,BELO HORIZONTE,MG,58000,-19.9266,-43.9666
+Café Arábica BH 10,Belo Horizonte,MG,38000,-19.9088,-43.9388
+Tech Innovate CWB 1,Curitiba,PR,155000,-25.4111,-49.2511
+Comércio Silva CWB 2,curitiba,PR,88000,-25.4450,-49.2902
+Logística Alpha CWB 3,Curitiba,PR,215000,-25.3905,-49.3051
+Padaria Central CWB 4,CURITIBA,PR,46000,-25.4521,-49.2310
+Consultoria Beta CWB 5,Curitiba,PR,325000,-25.4680,-49.3305
+Farmácia Bem Estar CWB 6,Curitiba,PR,96000,-25.3820,-49.2100
+Mercado da Esquina CWB 7,curitiba,PR,122000,-25.4805,-49.2222
+Indústria Gama CWB 8,Curitiba,PR,555000,-25.3901,-49.3510
+Boutique Fashion CWB 9,CURITIBA,PR,61000,-25.4466,-49.3166
+Café Arábica CWB 10,Curitiba,PR,41000,-25.4288,-49.2888
+Tech Innovate POA 1,Porto Alegre,RS,148000,-30.0111,-51.1911
+Comércio Silva POA 2,porto alegre,RS,84000,-30.0550,-51.2302
+Logística Alpha POA 3,Porto Alegre,RS,205000,-29.9905,-51.2451
+Padaria Central POA 4,PORTO ALEGRE,RS,44000,-30.0621,-51.1710
+Consultoria Beta POA 5,Porto Alegre,RS,315000,-30.0780,-51.2705
+Farmácia Bem Estar POA 6,Porto Alegre,RS,94000,-29.9820,-51.1500
+Mercado da Esquina POA 7,porto alegre,RS,118000,-30.0905,-51.1622
+Indústria Gama POA 8,Porto Alegre,RS,545000,-29.9901,-51.2910
+Tech Innovate SSA 1,Salvador,BA,142000,-12.9511,-38.4811
+Comércio Silva SSA 2,salvador,BA,80000,-12.9950,-38.5202
+Logística Alpha SSA 3,Salvador,BA,195000,-12.9205,-38.5351
+Padaria Central SSA 4,SALVADOR,BA,40000,-13.0021,-38.4610
+Consultoria Beta SSA 5,Salvador,BA,305000,-13.0180,-38.5505
+Farmácia Bem Estar SSA 6,Salvador,BA,90000,-12.9120,-38.4500
+Mercado da Esquina SSA 7,salvador,BA,112000,-13.0305,-38.4622
+Indústria Gama SSA 8,Salvador,BA,535000,-12.9201,-38.5610
+Boutique Fashion SSA 9,SALVADOR,BA,56000,-12.9866,-38.5266
+Café Arábica SSA 10,Salvador,BA,36000,-12.9688,-38.4988
+Tech Innovate REC 1,Recife,PE,138000,-8.0211,-34.8511
+Comércio Silva REC 2,recife,PE,78000,-8.0650,-34.8902
+Logística Alpha REC 3,Recife,PE,190000,-8.0005,-34.9051
+Padaria Central REC 4,RECIFE,PE,38000,-8.0821,-34.8610
+Consultoria Beta REC 5,Recife,PE,295000,-8.0980,-34.9105
+Farmácia Bem Estar REC 6,Recife,PE,88000,-8.0120,-34.8400
+Mercado da Esquina REC 7,recife,PE,108000,-8.1105,-34.8522
+Indústria Gama REC 8,Recife,PE,525000,-8.0001,-34.9210
+Tech Innovate FOR 1,Fortaleza,CE,135000,-3.6911,-38.5211
+Comércio Silva FOR 2,fortaleza,CE,75000,-3.7350,-38.5602
+Logística Alpha FOR 3,Fortaleza,CE,185000,-3.6805,-38.5751
+Padaria Central FOR 4,FORTALEZA,CE,36000,-3.7521,-38.5010
+Consultoria Beta FOR 5,Fortaleza,CE,285000,-3.7680,-38.5905
+Farmácia Bem Estar FOR 6,Fortaleza,CE,85000,-3.6720,-38.4900
+Mercado da Esquina FOR 7,fortaleza,CE,105000,-3.7805,-38.5122
+Indústria Gama FOR 8,Fortaleza,CE,515000,-3.6801,-38.6010
+Tech Innovate MAO 1,Manaus,AM,130000,-3.0911,-60.0011
+Comércio Silva MAO 2,manaus,AM,70000,-3.1350,-60.0402
+Logística Alpha MAO 3,Manaus,AM,180000,-3.0805,-60.0551
+Padaria Central MAO 4,MANAUS,AM,34000,-3.1521,-59.9810
+Consultoria Beta MAO 5,Manaus,AM,275000,-3.1680,-60.0705
+Farmácia Bem Estar MAO 6,Manaus,AM,80000,-3.0720,-59.9700
+Tech Innovate BEL 1,Belém,PA,125000,-1.4311,-48.4811
+Comércio Silva BEL 2,belém,PA,68000,-1.4750,-48.5202
+Logística Alpha BEL 3,Belém,PA,175000,-1.4205,-48.5351
+Padaria Central BEL 4,BELÉM,PA,32000,-1.4921,-48.4610
+Consultoria Beta BEL 5,Belém,PA,265000,-1.5080,-48.5505
+Tech Innovate BSB 1,Brasília,DF,165000,-15.7711,-47.8611
+Comércio Silva BSB 2,brasília,DF,95000,-15.8150,-47.9002
+Logística Alpha BSB 3,Brasília,DF,230000,-15.7505,-47.9151
+Padaria Central BSB 4,BRASÍLIA,DF,50000,-15.8321,-47.8410
+Consultoria Beta BSB 5,Brasília,DF,340000,-15.8480,-47.9405
+Farmácia Bem Estar BSB 6,Brasília,DF,100000,-15.7620,-47.8200
+Mercado da Esquina BSB 7,brasília,DF,130000,-15.8605,-47.8322
+Indústria Gama BSB 8,Brasília,DF,570000,-15.7501,-47.9510
+Boutique Fashion BSB 9,BRASÍLIA,DF,64000,-15.8266,-47.9066
+Café Arábica BSB 10,Brasília,DF,44000,-15.8088,-47.8788
+Inovação Tec SC 1,São Carlos,SP,120000,-21.9950,-47.8711
+Padaria Central SC 2,são carlos,SP,40000,-22.0301,-47.9102
+Consultoria SC 3,São Carlos,SP,210000,-21.9805,-47.9251
+Mercado Local SC 4,SÃO CARLOS,SP,105000,-22.0421,-47.8610
+Logística SC 5,São Carlos,SP,350000,-22.0500,-47.8800
