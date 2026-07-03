@@ -16,6 +16,8 @@ let layerGroup = L.layerGroup().addTo(map);
 let dadosCarregados = false;
 let todosOsPontos = [];
 let todosOsDados = [];
+let idRequisicaoAtual = 0;
+let legendControl = null;
 
 //DOM
 const inputCSV = document.getElementById("csv");
@@ -109,8 +111,13 @@ async function carregarTodosPontos() {
         
         const tipoVisualizacao = document.getElementById("visualizacao").value;
 
-        // muda a rota do endpoint -> vai ter que mudar essa linha quando adicionar o cloroplético
-        const rotaEndpoint = tipoVisualizacao === "Símbolos Proporcionais" ? "proportional" : "points";
+        let rotaEndpoint = "points";
+
+        // muda a rota do endpoint de acordo com o tipo de visualização
+        if (tipoVisualizacao === "Símbolos Proporcionais") 
+            rotaEndpoint = "proportional";
+        else if (tipoVisualizacao === "Coroplético") 
+            rotaEndpoint = "choropleth";
 
         const response = await fetch(`http://localhost:5000/${rotaEndpoint}?${queryString}`);
 
@@ -123,6 +130,15 @@ async function carregarTodosPontos() {
             return;
         }
         
+        // se for coroplético, passa pro plotarCoropletico e para a função aqui
+        if (tipoVisualizacao === "Coroplético") {
+            plotarCoropletico(data);
+            if (contagemPontos) {
+                contagemPontos.textContent = `Modo Coroplético ativado`;
+            }
+            return;
+        }
+
         // Verificar se os dados têm latitude e longitude
         if (data.length > 0) {
             console.log('Amostra do primeiro ponto:', data[0]);
@@ -164,50 +180,65 @@ async function carregarTodosPontos() {
     }
 }
 
-// Carrega estatísticas
+// Carrega estatísticas com leitura direta do CSV Original
 async function carregarEstatisticas() {
-    try {
-        // Tentar a coluna dos dados
-        let valueColumn = 'dados';
-        
-        if (todosOsDados.length > 0) {
-            const colunas = Object.keys(todosOsDados[0]);
-            console.log('Colunas disponíveis para estatísticas:', colunas);
+    const estatisticasDiv = document.getElementById("estatisticas");
 
-            const colunasNumericas = ['dados', 'valor', 'value'];
-            for (const col of colunasNumericas) {
-                if (colunas.includes(col)) {
-                    valueColumn = col;
-                    break;
-                }
-            }
-            
-            // Se não encontrou usa a primeira coluna numérica
-            if (!colunasNumericas.includes(valueColumn)) {
-                for (const col of colunas) {
-                    if (col !== 'latitude' && col !== 'longitude' && 
-                        col !== 'Municipio' && col !== 'estado' &&
-                        col !== 'cidade' && col !== 'uf' &&
-                        !isNaN(parseFloat(todosOsDados[0][col]))) {
-                        valueColumn = col;
-                        break;
-                    }
-                }
+    try {
+        // pergunta pro servidor quais são as colunas reais do csv
+        const infoResponse = await fetch('http://localhost:5000/dataset');
+        const infoData = await infoResponse.json();
+
+        if (!infoData.loaded) return;
+
+        const colunasOriginais = infoData.columns;
+        
+        // tentar achar 'valor', 'value' ou 'dados'. Se não achar, usa a primeira que for numérica
+        let valueColumn = 'valor'; 
+
+        const colunasComuns = ['valor', 'value', 'dados'];
+        let colunaEncontrada = false;
+
+        for (const col of colunasComuns) {
+            // procura ignorando maiúsculas/minúsculas
+            const achou = colunasOriginais.find(c => c.toLowerCase() === col);
+            if (achou) {
+                valueColumn = achou;
+                colunaEncontrada = true;
+                break;
             }
         }
+
+        // Se não achou colunas com nomes óbvios, pega a primeira coluna numérica (que não seja lat/lon)
+        if (!colunaEncontrada && todosOsDados && todosOsDados.length > 0 && todosOsDados[0].data) {
+             const amostra = todosOsDados[0].data;
+             for (const col of colunasOriginais) {
+                 const lower = col.toLowerCase();
+                 if (!['latitude', 'longitude', 'lat', 'lon', 'municipio', 'cidade', 'estado', 'uf', 'municipio_limpo'].includes(lower)) {
+                     if (!isNaN(parseFloat(amostra[col]))) {
+                         valueColumn = col;
+                         break;
+                     }
+                 }
+             }
+        }
+
+        console.log('Solicitando estatísticas da coluna original:', valueColumn);
         
-        console.log('Usando coluna para estatísticas:', valueColumn);
-        
+        // faz o pedido final para a rota de estatísticas
         const response = await fetch(`http://localhost:5000/statistics?value=${valueColumn}`);
         const data = await response.json();
         
+        // se o python bloqueou (csv não tinha números)
         if (data.error) {
-            estatisticasDiv.innerHTML = `<p>${data.error}</p>`;
+            estatisticasDiv.innerHTML = `
+                <p style="color: #ff0000; font-weight: bold; font-size: 14px;">Atenção</p>
+                <p style="font-size: 13px;">${data.error}</p>
+            `;
             return;
         }
         
-        console.log('Estatísticas recebidas:', data);
-        
+        // desenha as estatísticas reais na tela
         estatisticasDiv.innerHTML = `
             <p>Total de registros: ${data.rows}</p>
             <p>Mínimo: ${data.min.toFixed(2)}</p>
@@ -215,11 +246,14 @@ async function carregarEstatisticas() {
             <p>Média: ${data.mean.toFixed(2)}</p>
             <p>Mediana: ${data.median.toFixed(2)}</p>
             <p style="font-size: 11px; color: #888; margin-top: 5px;">
-                Fonte dos dados: Coluna '${valueColumn}'
+                Coluna Base: <b>${valueColumn}</b>
             </p>
         `;
     } catch (error) {
         console.error('Erro ao carregar estatísticas:', error);
+        if (estatisticasDiv) {
+            estatisticasDiv.innerHTML = `<p style="color: red;">Erro ao processar dados</p>`;
+        }
     }
 }
 
@@ -229,6 +263,12 @@ function plotarPontos() {
     
     // apaga camada anterior
     layerGroup.clearLayers();
+
+    // Remove a legenda se o usuário trocar para outra visualização
+    if (legendControl) {
+        map.removeControl(legendControl);
+        legendControl = null;
+    }
     
     if (!todosOsPontos || todosOsPontos.length === 0) {
         console.warn('Nenhum ponto para plotar');
@@ -345,6 +385,90 @@ function plotarPontos() {
     console.log(`${pontosPlotados} pontos plotados no mapa`);
 }
 
+// função que plota os polígonos dos municípios para a visualização coroplética
+function plotarCoropletico(geojsonData) {
+    console.log('Plotando mapa coroplético...');
+    layerGroup.clearLayers();
+
+    // descobre o valor máximo e mínimo para calcular o gradiente de cores
+    const valores = geojsonData.features
+        .map(f => f.properties.total)
+        .filter(t => t > 0); // ignora cidades sem empresas
+
+    const maxVal = Math.max(...valores);
+    const minVal = Math.min(...valores);
+
+    // função que define a cor baseada na quantidade
+    function getColor(d) {
+        // normaliza o valor entre 0 e 1
+        let pct = (d - minVal) / (maxVal - minVal);
+        
+        // prevenção caso maxVal e minVal sejam iguais (ex: só tem 1 cidade no mapa)
+        if (isNaN(pct)) pct = 1;
+
+        // gradiente do amarelo (pouco) ao vermelho escuro (muito)
+        return pct > 0.8 ? '#800026' :
+            pct > 0.6 ? '#BD0026' :
+            pct > 0.4 ? '#E31A1C' :
+            pct > 0.2 ? '#FC4E2A' :
+            pct > 0.0 ? '#FD8D3C' :
+                        '#FFEDA0';
+    }
+
+    // Cria a camada GeoJSON no Leaflet
+    L.geoJSON(geojsonData, {
+        style: function (feature) {
+            const qtd = feature.properties.total;
+            return {
+                fillColor: getColor(qtd),
+                weight: 1,           // Espessura da borda do município
+                opacity: 1,          // Opacidade da borda branca
+                color: '#ffffff',    // Cor da borda
+                fillOpacity: 0.8     // Opacidade padrão para todos, já que todos têm dados
+            };
+        },
+        onEachFeature: function (feature, layer) {
+            const props = feature.properties;
+            layer.bindPopup(`
+                <div style="min-width: 150px; text-align: center;">
+                    <strong style="font-size: 14px;">${props.NOME} - ${props.UF}</strong>
+                    <hr style="margin: 5px 0;">
+                    Registros: <b>${props.total}</b>
+                </div>
+            `);
+        }
+    }).addTo(layerGroup);
+
+    // remove a legenda antiga se existir
+    if (legendControl) {
+        map.removeControl(legendControl);
+    }
+
+    // só cria legenda se houver algum município com dados
+    if (maxVal > 0) {
+        legendControl = L.control({ position: 'bottomright' });
+
+        legendControl.onAdd = function () {
+            const div = L.DomUtil.create('div', 'info legend');
+            
+            // cria um gradiente em css para a barra de cores (as mesmas do mapa)
+            const gradienteCores = "linear-gradient(to right, #FFEDA0, #FD8D3C, #FC4E2A, #E31A1C, #BD0026, #800026)";
+            
+            div.innerHTML = `
+                <div style="font-weight: 600; margin-bottom: 6px; text-align: center;">Total de Registros</div>
+                <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: bold;">
+                    <span>${minVal}</span>
+                    <span>${maxVal}</span>
+                </div>
+                <div style="background: ${gradienteCores}; width: 180px; height: 12px; border-radius: 4px; border: 1px solid #aaa; margin-top: 4px;"></div>
+            `;
+            return div;
+        };
+
+        legendControl.addTo(map);
+    }
+}
+
 // centralizar o mapa nos pontos
 function centralizarMapa() {
     if (todosOsPontos.length === 0) return;
@@ -397,19 +521,32 @@ function centralizarMapa() {
 // Busca os pontos na área visível
 let timeoutId = null;
 map.on('moveend', () => {
-    if (dadosCarregados) {
-        clearTimeout(timeoutId);
+    if (!dadosCarregados) {
+        return;
+    }
+    
+    const tipoVisualizacao = document.getElementById("visualizacao").value;
+    
+    // não precisamos travar o computador recarregando os polígonos a cada milímetro arrastado
+    if (tipoVisualizacao === "Coroplético") {
+        return;
+    }
+
+    clearTimeout(timeoutId);
         timeoutId = setTimeout(() => {
             const bounds = map.getBounds();
             console.log('Mapa movido, buscando pontos na área:', bounds);
             buscarPontosNaArea();
         }, 500);
-    }
 });
 
 async function buscarPontosNaArea() {
-    if (!dadosCarregados) return;
+    if (!dadosCarregados) 
+        return;
     
+    // cria uma "senha" única para esta requisição para evitar race conditions
+    const idDestaRequisicao = ++idRequisicaoAtual;
+
     const bounds = map.getBounds();
     const params = {
         north: bounds.getNorth(),
@@ -417,7 +554,10 @@ async function buscarPontosNaArea() {
         east: bounds.getEast(),
         west: bounds.getWest()
     };
-    
+
+    // captura a tela de carregamento
+    const loadingOverlay = document.getElementById("loading-overlay");
+
     try {
         const queryString = new URLSearchParams(params).toString();
         
@@ -425,17 +565,43 @@ async function buscarPontosNaArea() {
 
         const tipoVisualizacao = document.getElementById("visualizacao").value;
 
-        // muda a rota do endpoint -> vai ter que mudar essa linha quando adicionar o cloroplético
-        const rotaEndpoint = tipoVisualizacao === "Símbolos Proporcionais" ? "proportional" : "points";
+        let rotaEndpoint = "points";
+
+        // muda a rota do endpoint de acordo com o tipo de visualização
+        if (tipoVisualizacao === "Símbolos Proporcionais") 
+            rotaEndpoint = "proportional";
+        else if (tipoVisualizacao === "Coroplético") {
+            rotaEndpoint = "choropleth";
+            // LIGA a tela de carregamento antes de fazer o fetch
+            loadingOverlay.style.display = "flex";
+        }
 
         const response = await fetch(`http://localhost:5000/${rotaEndpoint}?${queryString}`);
 
-
         const data = await response.json();
         
+        // se o usuário já mudou de ideia e fez outra requisição enquanto 
+        // essa estava carregando (demorando), nós simplesmente descartamos essa resposta velha
+        if (idDestaRequisicao !== idRequisicaoAtual) {
+            console.log("Requisição atrasada ignorada. O usuário já mudou de visualização.");
+            return;
+        }
+
         if (data.error) {
             console.error('Erro na busca:', data.error);
             return;
+        }
+
+        // se for coroplético, passa os dados direto para uma nova função de plotagem
+        if (tipoVisualizacao === "Coroplético") {
+            plotarCoropletico(data);
+            if (contagemPontos)
+                contagemPontos.textContent = 'Modo Coroplético ativado';
+
+            // DESLIGA a tela de carregamento após desenhar o mapa
+            loadingOverlay.style.display = "none";
+
+            return; // para a execução aqui, não segue para o plotarPontos()
         }
         
         console.log(`${data.length} pontos na área atual`);
@@ -453,6 +619,7 @@ async function buscarPontosNaArea() {
             contagemPontos.textContent = `${todosOsPontos.length} pontos (área atual)`;
         }
     } catch (error) {
+        loadingOverlay.style.display = "none";
         console.error('Erro ao buscar pontos:', error);
     }
 }
