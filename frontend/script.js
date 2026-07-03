@@ -107,7 +107,13 @@ async function carregarTodosPontos() {
         const queryString = new URLSearchParams(params).toString();
         console.log('Buscando pontos com parâmetros:', params);
         
-        const response = await fetch(`http://localhost:5000/points?${queryString}`);
+        const tipoVisualizacao = document.getElementById("visualizacao").value;
+
+        // muda a rota do endpoint -> vai ter que mudar essa linha quando adicionar o cloroplético
+        const rotaEndpoint = tipoVisualizacao === "Símbolos Proporcionais" ? "proportional" : "points";
+
+        const response = await fetch(`http://localhost:5000/${rotaEndpoint}?${queryString}`);
+
         const data = await response.json();
         
         console.log(`Recebidos ${data.length} pontos do servidor`);
@@ -233,6 +239,10 @@ function plotarPontos() {
     const cores = ['#ff1900b4'];
     
     let pontosPlotados = 0;
+
+    // verifica qual a visualização selecionada no menu
+    const visualizacaoSelect = document.getElementById("visualizacao");
+    const tipoVisualizacao = visualizacaoSelect ? visualizacaoSelect.value : "Pontos";
     
     todosOsPontos.forEach((ponto, index) => {
         // Valida as coordenadas
@@ -248,8 +258,13 @@ function plotarPontos() {
         
         const cor = cores[index % cores.length];
         
+        // define se usa raio 7 ou o raio que veio do backend
+        const raio = (tipoVisualizacao === "Símbolos Proporcionais" && ponto.data.radius)
+            ? ponto.data.radius
+            : 7;
+
         const marker = L.circleMarker([ponto.lat, ponto.lon], {
-            radius: 7,
+            radius: raio,
             fillColor: cor,
             color: '#af0000',
             weight: 1.5,
@@ -265,12 +280,27 @@ function plotarPontos() {
                 <hr style="margin: 8px 0; border: none; border-top: 1px solid #eee;">
         `;
         
+        // exibe o total de registros se estiver agrupado (para simbolos proporcionais)
+        if (dados.total) {
+            popupContent += `
+                <div style="margin: 5px 0; color: #af0000; font-weight: bold; font-size: 13px;">
+                    Quantidade: ${dados.total} registros
+                </div>
+            `;
+        }
+
+        popupContent += `<hr style="margin: 8px 0; border: none; border-top: 1px solid #eee;">`;
+
         // Adiciona os campos principais primeiro
         const camposPrincipais = ['empresa', 'nome', 'Municipio', 'cidade', 'estado', 'uf', 'dados', 'valor', 'populacao'];
         const outrosCampos = [];
         
         for (const [key, value] of Object.entries(dados)) {
             if (value !== null && value !== undefined && value !== '') {
+                // pular as coordenadas geradas pelo backend pra não poluir o popup
+                if (key === 'radius' || key === 'total')
+                    continue;
+                
                 if (camposPrincipais.includes(key)) {
                     popupContent += `
                         <div style="margin: 4px 0;">
@@ -392,7 +422,17 @@ async function buscarPontosNaArea() {
     
     try {
         const queryString = new URLSearchParams(params).toString();
-        const response = await fetch(`http://localhost:5000/points?${queryString}`);
+        
+        // mesma lógica da função carregarTodosPontos()
+
+        const tipoVisualizacao = document.getElementById("visualizacao").value;
+
+        // muda a rota do endpoint -> vai ter que mudar essa linha quando adicionar o cloroplético
+        const rotaEndpoint = tipoVisualizacao === "Símbolos Proporcionais" ? "proportional" : "points";
+
+        const response = await fetch(`http://localhost:5000/${rotaEndpoint}?${queryString}`);
+
+
         const data = await response.json();
         
         if (data.error) {
@@ -421,3 +461,14 @@ async function buscarPontosNaArea() {
 
 console.log('Sistema inicializado com sucesso!');
 console.log('Carregue um arquivo CSV para começar');
+
+// atualiza o mapa automaticamente quando o usuário altera o tipo de visualização
+const menuVisualizacao = document.getElementById("visualizacao");
+if (menuVisualizacao) {
+    menuVisualizacao.addEventListener("change", () => {
+        if (dadosCarregados) {
+            console.log("Mudou a visualização. Atualizando mapa...");
+            buscarPontosNaArea();
+        }
+    });
+}
