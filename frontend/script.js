@@ -289,16 +289,14 @@ function plotarPontos() {
             `;
         }
 
-        popupContent += `<hr style="margin: 8px 0; border: none; border-top: 1px solid #eee;">`;
-
         // Adiciona os campos principais primeiro
         const camposPrincipais = ['empresa', 'nome', 'Municipio', 'cidade', 'estado', 'uf', 'dados', 'valor', 'populacao'];
         const outrosCampos = [];
         
         for (const [key, value] of Object.entries(dados)) {
             if (value !== null && value !== undefined && value !== '') {
-                // pular as coordenadas geradas pelo backend pra não poluir o popup
-                if (key === 'radius' || key === 'total')
+                // pular informações geradas pelo backend não úteis ao usuário pra não poluir o popup
+                if (key === 'radius' || key === 'total' || key === 'municipio_limpo')
                     continue;
                 
                 if (camposPrincipais.includes(key)) {
