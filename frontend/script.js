@@ -215,7 +215,7 @@ async function carregarEstatisticas() {
             <p>Média: ${data.mean.toFixed(2)}</p>
             <p>Mediana: ${data.median.toFixed(2)}</p>
             <p style="font-size: 11px; color: #888; margin-top: 5px;">
-                Coluna: ${valueColumn}
+                Fonte dos dados: Coluna '${valueColumn}'
             </p>
         `;
     } catch (error) {
