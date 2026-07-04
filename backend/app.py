@@ -154,13 +154,28 @@ def proportional_symbols():
         # encontra o nome real da coluna para colocar no popup
         col_original = next((c for c in df_area.columns if c.lower() in ['municipio', 'município', 'cidade']), 'municipio_limpo')
 
-        # agrupa pela coluna limpa e faz os cálculos agregados
-        grouped = df_area.groupby('municipio_limpo').agg(
-            total=('municipio_limpo', 'count'),    # conta quantas empresas existem na cidade
-            latitude=('latitude', 'mean'),         # tira a média para achar o centro do círculo
-            longitude=('longitude', 'mean'),       # mesma coisa
-            nome_exibicao=(col_original, 'first')  # pega o nome original para o popup
-        ).reset_index()
+        metric = request.args.get("metric", "count")
+
+        # se for por valor, tenta achar a coluna numérica
+        val_col = next((c for c in df_area.columns if c.lower() in ['valor', 'value', 'dados'] and pd.api.types.is_numeric_dtype(df_area[c])), None)
+
+        # verificar qual a métrica
+        if metric == "value" and val_col:
+            # agrupa SOMANDO os valores da coluna numérica
+            grouped = df_area.groupby('municipio_limpo').agg(
+                total=(val_col, 'sum'),                # soma os valores dos dados
+                latitude=('latitude', 'mean'),         # tira a média para achar o centro do círculo
+                longitude=('longitude', 'mean'),       # mesma coisa
+                nome_exibicao=(col_original, 'first')  # pega o nome original para o popup
+            ).reset_index()
+        else:
+            # agrupa pela coluna limpa e faz os cálculos agregados
+            grouped = df_area.groupby('municipio_limpo').agg(
+                total=('municipio_limpo', 'count'),    # conta quantas empresas existem na cidade
+                latitude=('latitude', 'mean'),
+                longitude=('longitude', 'mean'),
+                nome_exibicao=(col_original, 'first')
+            ).reset_index()
 
         # encontra o mínimo e o máximo de contagens na tela para calibrar os tamanhos dos raios
         min_value = grouped['total'].min()
@@ -191,18 +206,34 @@ def choropleth():
     if dataset is None:
         return {"error": "Nenhum dataset carregado"}, 400
     try:
-        col_municipio = next((c for c in dataset.columns if c.lower() in ['municipio', 'município', 'cidade']), 'municipio_limpo')
         col_estado = next((c for c in dataset.columns if c.lower() in ['estado', 'uf']), None)
 
         if not col_estado:
             return {"error": "O arquivo csv precisa de uma coluna de Estado (UF) para carregar os mapas corretos."}, 400
 
-        # agrupa os dados para pegar o total por município e descobrir os estados presentes
-        grouped = dataset.groupby(['municipio_limpo', col_estado]).size().reset_index(name='total')
+        metric = request.args.get("metric", "count")
+
+        val_col = next((c for c in dataset.columns if c.lower() in ['valor', 'value', 'dados'] and pd.api.types.is_numeric_dtype(dataset[c])), None)
+
+        if metric == "value" and val_col:
+            # agrupa SOMANDO os valores
+            grouped = dataset.groupby(['municipio_limpo', col_estado])[val_col].sum().reset_index(name='total')
+        else:
+            # agrupa os dados para pegar o total por município e descobrir os estados presentes
+            grouped = dataset.groupby(['municipio_limpo', col_estado]).size().reset_index(name='total')
         
+        # converte o pandas em um dicionário python para complexidade O(1)
+        mapa_totais = {}
+        for _, row in grouped.iterrows():
+            mun = str(row['municipio_limpo'])
+            uf = str(row[col_estado]).upper().strip()
+            
+            # A chave do dicionário será uma tupla: ("sao paulo", "SP")
+            mapa_totais[(mun, uf)] = float(row['total'])
+
         estados_presentes = grouped[col_estado].astype(str).str.upper().str.strip().unique()
 
-        features_combinadas = []
+        features_combinadas= []
 
         # lê apenas os arquivos geojson dos estados que estão presentes no csv
         for uf in estados_presentes:
@@ -228,7 +259,9 @@ def choropleth():
                             continue
 
                         # se achou dados para essa cidade, injeta o total; se não, o total é 0
-                        total = int(dado_mun['total'].iloc[0]) if not dado_mun.empty else 0
+                        total = mapa_totais.get((nome_geo_limpo, uf))
+                        if total is None:
+                            continue
 
                         # adiciona o total diretamente nas propriedades do polígono
                         feature['properties']['total'] = total
