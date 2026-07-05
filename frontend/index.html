@@ -57,14 +57,24 @@
                     <option>Coroplético</option>
                 </select>
             </div>
+
+            <div id="container-metrica" style="display: none; margin-top: 15px;">
+                <label for="metrica">
+                    Basear tamanho/cor em:
+                </label>
+                <select id="metrica">
+                    <option value="count">Quantidade de Registros</option>
+                    <option value="value">Valor dos Dados</option>
+                </select>
+            </div>
         </aside>
 
         <section class="map-container">
             <div id="map">
                 <div id="loading-overlay" class="loading-overlay">
-                <div class="spinner"></div>
-                <span>Construindo mapa coroplético...</span>
-            </div>
+                    <div class="spinner"></div>
+                    <span>Construindo mapa coroplético...</span>
+                </div>
             </div>
         </section>
 

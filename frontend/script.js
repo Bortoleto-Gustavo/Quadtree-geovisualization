@@ -240,9 +240,9 @@ async function carregarEstatisticas() {
         
         // desenha as estatísticas reais na tela
         estatisticasDiv.innerHTML = `
-            <p>Total de registros: ${data.rows}</p>
-            <p>Mínimo: ${data.min.toFixed(2)}</p>
-            <p>Máximo: ${data.max.toFixed(2)}</p>
+            <h3>Estatísticas</h3>
+            <p>Valor Mínimo: ${data.min.toFixed(2)}</p>
+            <p>Valor Máximo: ${data.max.toFixed(2)}</p>
             <p>Média: ${data.mean.toFixed(2)}</p>
             <p>Mediana: ${data.median.toFixed(2)}</p>
             <p style="font-size: 11px; color: #888; margin-top: 5px;">
@@ -324,7 +324,7 @@ function plotarPontos() {
         if (dados.total) {
             popupContent += `
                 <div style="margin: 5px 0; color: #af0000; font-weight: bold; font-size: 13px;">
-                    Quantidade: ${dados.total} registros
+                    Total: ${Number(dados.total).toLocaleString('pt-BR')}
                 </div>
             `;
         }
@@ -433,7 +433,7 @@ function plotarCoropletico(geojsonData) {
                 <div style="min-width: 150px; text-align: center;">
                     <strong style="font-size: 14px;">${props.NOME} - ${props.UF}</strong>
                     <hr style="margin: 5px 0;">
-                    Registros: <b>${props.total}</b>
+                    Total: <b>${Number(props.total).toLocaleString('pt-BR')}</b>
                 </div>
             `);
         }
@@ -457,8 +457,8 @@ function plotarCoropletico(geojsonData) {
             div.innerHTML = `
                 <div style="font-weight: 600; margin-bottom: 6px; text-align: center;">Total de Registros</div>
                 <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: bold;">
-                    <span>${minVal}</span>
-                    <span>${maxVal}</span>
+                    <span>${minVal.toLocaleString('pt-BR')}</span>
+                    <span>${maxVal.toLocaleString('pt-BR')}</span>
                 </div>
                 <div style="background: ${gradienteCores}; width: 180px; height: 12px; border-radius: 4px; border: 1px solid #aaa; margin-top: 4px;"></div>
             `;
@@ -524,13 +524,6 @@ map.on('moveend', () => {
     if (!dadosCarregados) {
         return;
     }
-    
-    const tipoVisualizacao = document.getElementById("visualizacao").value;
-    
-    // não precisamos travar o computador recarregando os polígonos a cada milímetro arrastado
-    if (tipoVisualizacao === "Coroplético") {
-        return;
-    }
 
     clearTimeout(timeoutId);
         timeoutId = setTimeout(() => {
@@ -548,15 +541,22 @@ async function buscarPontosNaArea() {
     const idDestaRequisicao = ++idRequisicaoAtual;
 
     const bounds = map.getBounds();
+
+    // decide entre a métrica escolhida (no modo proporcional e coroplético) e o modo padrão (pontos)
+    const metrica = document.getElementById("metrica") ? document.getElementById("metrica").value : "count";
+
     const params = {
         north: bounds.getNorth(),
         south: bounds.getSouth(),
         east: bounds.getEast(),
-        west: bounds.getWest()
+        west: bounds.getWest(),
+        metric: metrica
     };
 
     // captura a tela de carregamento
     const loadingOverlay = document.getElementById("loading-overlay");
+    // variavel para timer
+    let loadingTimeout = null;
 
     try {
         const queryString = new URLSearchParams(params).toString();
@@ -573,12 +573,19 @@ async function buscarPontosNaArea() {
         else if (tipoVisualizacao === "Coroplético") {
             rotaEndpoint = "choropleth";
             // LIGA a tela de carregamento antes de fazer o fetch
-            loadingOverlay.style.display = "flex";
+            loadingTimeout = setTimeout(() => {
+                loadingOverlay.style.display = "flex";
+            }, 300);
         }
 
         const response = await fetch(`http://localhost:5000/${rotaEndpoint}?${queryString}`);
 
         const data = await response.json();
+
+        // CANCELA o timer se a requisição foi rápida
+        if (loadingTimeout) {
+            clearTimeout(loadingTimeout);
+        }
         
         // se o usuário já mudou de ideia e fez outra requisição enquanto 
         // essa estava carregando (demorando), nós simplesmente descartamos essa resposta velha
@@ -627,13 +634,44 @@ async function buscarPontosNaArea() {
 console.log('Sistema inicializado com sucesso!');
 console.log('Carregue um arquivo CSV para começar');
 
-// atualiza o mapa automaticamente quando o usuário altera o tipo de visualização
 const menuVisualizacao = document.getElementById("visualizacao");
+const menuMetrica = document.getElementById("metrica");
+const containerMetrica = document.getElementById("container-metrica");
+
 if (menuVisualizacao) {
     menuVisualizacao.addEventListener("change", () => {
+        // só mostra o menu de métricas se a seleção for diferente de "Pontos"
+        if (menuVisualizacao.value === "Pontos") {
+            containerMetrica.style.display = "none";
+            containerMetrica.classList.remove("menu-destaque");
+        }
+        else {
+            if (containerMetrica.style.display === "none") {
+                containerMetrica.style.display = "block";
+
+                // Remove e adiciona a classe em um pequeno delay para forçar a animação rodar de novo
+                containerMetrica.classList.remove("menu-destaque");
+                void containerMetrica.offsetWidth; // Truque do JS para reiniciar animações CSS
+                containerMetrica.classList.add("menu-destaque");
+
+                // Faz a sidebar rolar suavemente até o novo menu
+                setTimeout(() => {
+                    containerMetrica.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                }, 100);
+            }
+        }
+    
+        // atualiza o mapa automaticamente quando o usuário altera o tipo de visualização
         if (dadosCarregados) {
             console.log("Mudou a visualização. Atualizando mapa...");
             buscarPontosNaArea();
+        }
+
+        // se o usuário mudar a métrica, atualiza o mapa
+        if (menuMetrica) {
+            menuMetrica.addEventListener("change", () => {
+                if (dadosCarregados) buscarPontosNaArea();
+            });
         }
     });
 }

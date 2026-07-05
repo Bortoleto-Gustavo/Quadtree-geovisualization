@@ -92,7 +92,7 @@ header p {
 
 .sidebar input[type="file"] {
     width: 100%;
-    padding: 10px;
+    padding: 5px;
     border: 2px dashed #b0b0b0;
     border-radius: 8px;
     cursor: pointer;
@@ -302,6 +302,31 @@ header p {
 @keyframes spin { 
     0% { transform: rotate(0deg); } 
     100% { transform: rotate(360deg); } 
+}
+
+/* Animação para destacar novos menus na tela */
+@keyframes highlightAndSlideDown {
+    0% { 
+        opacity: 0; 
+        transform: translateY(-15px); 
+        background-color: #fff3cd; /* Amarelo de destaque */
+    }
+    50% {
+        background-color: #fff3cd;
+    }
+    100% { 
+        opacity: 1; 
+        transform: translateY(0); 
+        background-color: transparent;
+    }
+}
+
+.menu-destaque {
+    display: block !important; /* Força a exibição */
+    animation: highlightAndSlideDown 0.8s ease-out forwards;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 5px;
 }
 
 /* LEGENDA DO MAPA */

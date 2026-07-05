@@ -16,6 +16,7 @@ CORS(app)
 dataset = None
 world_boundary = Rectangle(x=0, y=0, w=180, h=90)
 quadtree = QuadTree(world_boundary)
+geojson_cache = {}
 
 def rebuild_quadtree(df):
     global quadtree
@@ -215,18 +216,43 @@ def choropleth():
 
         val_col = next((c for c in dataset.columns if c.lower() in ['valor', 'value', 'dados'] and pd.api.types.is_numeric_dtype(dataset[c])), None)
 
+        # USAR A QUADTREE PARA FILTRAR A TELA
+        north = float(request.args["north"])
+        south = float(request.args["south"])
+        east = float(request.args["east"])
+        west = float(request.args["west"])
+
+        area = Rectangle(
+            x=(east + west) / 2,
+            y=(north + south) / 2,
+            w=(east - west) / 2,
+            h=(north - south) / 2
+        )
+
+        # só pega os registros que estão dentro da tela AGORA
+        points = quadtree.query(area)
+
+        if not points:
+            return jsonify({"type": "FeatureCollection", "features": []})
+
+        # converte os pontos visíveis de volta para Pandas
+        records = [p.data for p in points]
+        df_area = pd.DataFrame(records)
+
+        # agrupa só os dados que estão visiveis na tela
         if metric == "value" and val_col:
             # agrupa SOMANDO os valores
-            grouped = dataset.groupby(['municipio_limpo', col_estado])[val_col].sum().reset_index(name='total')
+            grouped = df_area.groupby(['municipio_limpo', col_estado])[val_col].sum().reset_index(name='total')
         else:
             # agrupa os dados para pegar o total por município e descobrir os estados presentes
-            grouped = dataset.groupby(['municipio_limpo', col_estado]).size().reset_index(name='total')
+            grouped = df_area.groupby(['municipio_limpo', col_estado]).size().reset_index(name='total')
         
         # converte o pandas em um dicionário python para complexidade O(1)
         mapa_totais = {}
         for _, row in grouped.iterrows():
             mun = str(row['municipio_limpo'])
             uf = str(row[col_estado]).upper().strip()
+            mapa_totais[(mun, uf)] = float(row['total'])
             
             # A chave do dicionário será uma tupla: ("sao paulo", "SP")
             mapa_totais[(mun, uf)] = float(row['total'])
@@ -237,37 +263,50 @@ def choropleth():
 
         # lê apenas os arquivos geojson dos estados que estão presentes no csv
         for uf in estados_presentes:
-            # ajuste este caminho para onde seus arquivos geojson realmente estão
-            caminho_geojson = os.path.join(os.path.dirname(__file__), 'geojson', f'{uf}.json')
-            
-            if os.path.exists(caminho_geojson):
-                with open(caminho_geojson, 'r', encoding='utf-8') as f:
-                    geo_data = json.load(f)
+            # Se o estado ainda não está na memória RAM, a gente lê do disco e guarda
+            if uf not in geojson_cache:
+                caminho_geojson = os.path.join(os.path.dirname(__file__), 'geojson', f'{uf}.json')
+                
+                if os.path.exists(caminho_geojson):
+                    with open(caminho_geojson, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                        
+                        # limpa os nomes das cidades do geojson apenas 1 vez
+                        for feature in data.get('features', []):
+                            nome_cru = feature['properties'].get('NOME', '')
+                            feature['properties']['nome_limpo'] = limpar_texto(nome_cru)
+                            
+                        geojson_cache[uf] = data
+                else:
+                    print(f"Aviso: Arquivo de limites não encontrado para o estado {uf}")
+                    continue # Pula para o próximo estado
 
-                    for feature in geo_data.get('features', []):
-                        nome_geo = feature['properties'].get('NOME', '')
-                        nome_geo_limpo = limpar_texto(nome_geo)
+            # Pega o arquivo instantaneamente da memória RAM
+            geo_data = geojson_cache[uf]
 
-                        # busca se esse município do geojson tem dados no nosso csv
-                        dado_mun = grouped[
-                            (grouped['municipio_limpo'] == nome_geo_limpo) & 
-                            (grouped[col_estado].str.upper() == uf)
-                        ]
+            for feature in geo_data.get('features', []):
+                nome_geo = feature['properties'].get('NOME', '')
+                nome_geo_limpo = limpar_texto(nome_geo)
 
-                        # otimização para salvar memória: não envia se estiver vazio
-                        if dado_mun.empty:
-                            continue
+                # Busca instantânea
+                total = mapa_totais.get((nome_geo_limpo, uf))
 
-                        # se achou dados para essa cidade, injeta o total; se não, o total é 0
-                        total = mapa_totais.get((nome_geo_limpo, uf))
-                        if total is None:
-                            continue
+                # Otimização para salvar memória: não envia se estiver vazio
+                if total is None:
+                    continue
 
-                        # adiciona o total diretamente nas propriedades do polígono
-                        feature['properties']['total'] = total
-                        features_combinadas.append(feature)
-            else:
-                print(f"Aviso: Arquivo de limites não encontrado para o estado {uf}")
+                # MUITO IMPORTANTE: Fazemos uma cópia leve (shallow copy) das propriedades.
+                # Se não fizermos isso, como o geo_data está em cache global, 
+                # a gente sujaria o arquivo na memória com os dados do usuário atual!
+                feature_copy = {
+                    "type": feature.get("type", "Feature"),
+                    "geometry": feature.get("geometry"),
+                    "properties": feature['properties'].copy()
+                }
+
+                # Injeta o total na cópia
+                feature_copy['properties']['total'] = total
+                features_combinadas.append(feature_copy)
 
         # Retorna o pacote no formato padrão de FeatureCollection que o Leaflet espera
         return jsonify({
