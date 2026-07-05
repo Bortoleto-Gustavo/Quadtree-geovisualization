@@ -390,13 +390,9 @@ function plotarCoropletico(geojsonData) {
     console.log('Plotando mapa coroplético...');
     layerGroup.clearLayers();
 
-    // descobre o valor máximo e mínimo para calcular o gradiente de cores
-    const valores = geojsonData.features
-        .map(f => f.properties.total)
-        .filter(t => t > 0); // ignora cidades sem empresas
-
-    const maxVal = Math.max(...valores);
-    const minVal = Math.min(...valores);
+    // pega o valor máximo e mínimo para calcular o gradiente de cores
+    const maxVal = geojsonData.global_max !== undefined ? geojsonData.global_max : 0;
+    const minVal = geojsonData.global_min !== undefined ? geojsonData.global_min : 0;
 
     // função que define a cor baseada na quantidade
     function getColor(d) {

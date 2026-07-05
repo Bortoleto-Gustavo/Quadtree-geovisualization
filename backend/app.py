@@ -160,6 +160,15 @@ def proportional_symbols():
         # se for por valor, tenta achar a coluna numérica
         val_col = next((c for c in df_area.columns if c.lower() in ['valor', 'value', 'dados'] and pd.api.types.is_numeric_dtype(df_area[c])), None)
 
+        # calcula o mínimo e máximo global para escala
+        if metric == "value" and val_col:
+            global_grouped = dataset.groupby('municipio_limpo')[val_col].sum()
+        else:
+            global_grouped = dataset.groupby('municipio_limpo').size()
+            
+        global_min = float(global_grouped.min()) if not global_grouped.empty else 0
+        global_max = float(global_grouped.max()) if not global_grouped.empty else 0
+
         # verificar qual a métrica
         if metric == "value" and val_col:
             # agrupa SOMANDO os valores da coluna numérica
@@ -178,16 +187,12 @@ def proportional_symbols():
                 nome_exibicao=(col_original, 'first')
             ).reset_index()
 
-        # encontra o mínimo e o máximo de contagens na tela para calibrar os tamanhos dos raios
-        min_value = grouped['total'].min()
-        max_value = grouped['total'].max()
-
         result = []
 
         for _, row in grouped.iterrows():
             qtd_empresas = int(row['total'])
 
-            raio = calculate_radius(qtd_empresas, min_value, max_value)
+            raio = calculate_radius(qtd_empresas, global_min, global_max)
 
             result.append({
                 "latitude": float(row['latitude']),
@@ -215,6 +220,15 @@ def choropleth():
         metric = request.args.get("metric", "count")
 
         val_col = next((c for c in dataset.columns if c.lower() in ['valor', 'value', 'dados'] and pd.api.types.is_numeric_dtype(dataset[c])), None)
+
+        # calcular o max e min globais (para gradiente das cores e legenda)
+        if metric == "value" and val_col:
+            global_grouped = dataset.groupby(['municipio_limpo', col_estado])[val_col].sum()
+        else:
+            global_grouped = dataset.groupby(['municipio_limpo', col_estado]).size()
+            
+        global_min = float(global_grouped.min()) if not global_grouped.empty else 0
+        global_max = float(global_grouped.max()) if not global_grouped.empty else 0
 
         # USAR A QUADTREE PARA FILTRAR A TELA
         north = float(request.args["north"])
@@ -311,6 +325,8 @@ def choropleth():
         # Retorna o pacote no formato padrão de FeatureCollection que o Leaflet espera
         return jsonify({
             "type": "FeatureCollection",
+            "global_min": global_min,
+            "global_max": global_max,
             "features": features_combinadas
         })
 
