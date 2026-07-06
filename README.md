@@ -55,7 +55,7 @@ python3 backend/app.py
 ```
 ### 2. Em seu navegador acesse:
 ```
-http://localhost:5000
+http://localhost:5500/frontend/index.html
 ```
 ### 3. Upload arquivo CSV
 - Clique em "Selecione um arquivo CSV"
